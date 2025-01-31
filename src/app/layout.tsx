@@ -24,6 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="A Blog" />
+      </head>
       <body
         className={`${instrumentSans.variable} ${instrumentSerif.variable} antialiased`}
       >
