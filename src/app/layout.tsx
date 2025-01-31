@@ -15,6 +15,34 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "A Blog",
+  description: "A simple example blog.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    description: "A simple example blog.",
+    url: "https://a-blog-example.vercel.app",
+    images: [
+      {
+        url: "https://a-blog-example.vercel.app/images/og.jpg",
+        width: 1200,
+        height: 675,
+        alt: "A Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "A Blog",
+    description: "A simple example blog.",
+    images: [
+      {
+        url: "https://a-blog-example.vercel.app/images/og.jpg",
+        width: 1200,
+        height: 675,
+        alt: "A Blog",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
