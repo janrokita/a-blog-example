@@ -5,6 +5,7 @@ import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import dayjs from "dayjs";
 import fs from "fs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 async function getPost(slug: string) {
   try {
@@ -21,18 +22,17 @@ async function getPost(slug: string) {
 export async function generateMetadata({
   params,
 }: {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }) {
   const slug = (await params).slug;
 
-  const post = await getPost(slug);
+  const post = await getPost(slug!);
 
   if (!post) {
     return {
-      title: "Post not found",
-      description: "Post not found",
+      title: "A Blog",
     };
   }
 
@@ -44,16 +44,16 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }) {
   const slug = (await params).slug;
 
-  const post = await getPost(slug);
+  const post = await getPost(slug!);
 
   if (!post) {
-    return <div className="p-4">Post not found</div>;
+    return redirect("/");
   }
 
   return (
@@ -89,4 +89,16 @@ export default async function Page({
       <Footer />
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const posts = await fs.readdirSync(`./src/posts`);
+
+  const slugs = posts.map((post) => {
+    return {
+      slug: post.replace(".md", ""),
+    };
+  });
+
+  return slugs;
 }
